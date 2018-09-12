@@ -18,19 +18,28 @@ interface IDispatchProps {
 }
 
 const Counter = (props: RouteComponentProps<any> & IStateProps & IDispatchProps) => (
-  <Grid spacing={16}>
-    <Grid item={true} xs={4}>
-      <Button variant="fab" color="primary" aria-label="Add" onClick={props.increment}>
-        <AddIcon />
-      </Button>
-    </Grid>
-    <Grid item={true} xs={4}>
-      Counter: {props.count}
-    </Grid>
-    <Grid item={true} xs={4}>
-      <Button variant="fab" color="secondary" aria-label="Sub" onClick={props.decrement}>
-        <RemoveIcon />
-      </Button>
+  <Grid spacing={8}     
+    container={true} 
+    direction="row"
+    justify="center"
+    alignItems="center">
+    <Grid item={true} lg={4} container={true}
+      direction="row"
+      justify="space-between"
+      alignItems="center">
+      <Grid item={true} lg={2} xs={4}>
+        <Button variant="fab" color="primary" aria-label="Add" onClick={props.increment}>
+          <AddIcon />
+        </Button>
+      </Grid>
+      <Grid item={true} lg={2} xs={4}>
+        Counter: {props.count}
+      </Grid>
+      <Grid item={true} lg={2} xs={4}>
+        <Button variant="fab" color="secondary" aria-label="Sub" onClick={props.decrement}>
+          <RemoveIcon />
+        </Button>
+      </Grid>
     </Grid>
   </Grid>
 )

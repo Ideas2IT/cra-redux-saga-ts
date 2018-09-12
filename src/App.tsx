@@ -2,7 +2,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import { History } from 'history';
 import * as React from 'react';
 import routes from './routes';
-import withRoot from './withRoot';
+import WithRoot from './WithRoot';
 
 interface IAppProps {
   history: History;
@@ -10,10 +10,12 @@ interface IAppProps {
 
 const App = ({ history }: IAppProps) => {
   return (
-    <ConnectedRouter history={history}>
-      { routes }
-    </ConnectedRouter>
+    <WithRoot>
+      <ConnectedRouter history={history}>
+        { routes }
+      </ConnectedRouter>
+    </WithRoot>
   )
 }
 
-export default withRoot(App);
+export default App;
