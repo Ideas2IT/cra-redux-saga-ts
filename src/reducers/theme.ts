@@ -18,6 +18,6 @@ const themeReducer = (state = inititalState, action: any) => {
         ...state
       };
   }
-}
+};
 
 export default themeReducer;

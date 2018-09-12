@@ -16,6 +16,6 @@ const routes = (
       <Route component={NoMatch} />
     </Switch>
   </div>
-)
+);
 
-export default routes
+export default routes;

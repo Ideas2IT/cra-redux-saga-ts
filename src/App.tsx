@@ -15,7 +15,7 @@ const App = ({ history }: IAppProps) => {
         { routes }
       </ConnectedRouter>
     </WithRoot>
-  )
-}
+  );
+};
 
 export default App;

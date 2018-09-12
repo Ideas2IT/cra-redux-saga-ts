@@ -49,6 +49,6 @@ const WithRoot = ({ children, activeTheme }: IRootProps) => (
 
 const mapStateToProps = (state: IState) => ({
   activeTheme: state.theme.activeTheme
-})
+});
 
 export default connect(mapStateToProps)(WithRoot);

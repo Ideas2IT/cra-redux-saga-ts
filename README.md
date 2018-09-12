@@ -15,7 +15,7 @@ This is the boilerplate to create a new React Application with Create React App 
 
 #
 
-###  [Demo](http://demolink.todo)
+###  [Demo](https://srikanthi2i.github.io/)
 
 #
 
