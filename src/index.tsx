@@ -17,7 +17,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 const history = createBrowserHistory();
 
-const composeEnhancer: typeof compose = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const composeEnhancer: typeof compose = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
   connectRouter(history)(rootReducer),
@@ -25,8 +25,8 @@ const store = createStore(
     applyMiddleware(
       routerMiddleware(history),
       sagaMiddleware
-    ),
-  ),
+    )
+  )
 );
 
 // then run the saga
@@ -47,7 +47,7 @@ class Main extends React.Component<any, any> {
           <App history={history} />
         </LocalizeProvider>
       </Provider>
-    )
+    );
   }
 }
 

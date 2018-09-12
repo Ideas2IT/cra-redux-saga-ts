@@ -5,4 +5,4 @@ import {
 export const changeTheme = (selectedTheme: string) => ({
   selectedTheme,
   type: CHANGE_THEME
-})
+});

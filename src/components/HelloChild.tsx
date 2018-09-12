@@ -26,12 +26,12 @@ const HelloChild = ({ pathname, search, hash }: IHelloChildProps) => (
       hash: {hash}
     </div>
   </div>
-)
+);
 
 const mapStateToProps = (state: IState) => ({
   hash: state.router.location.hash,
   pathname: state.router.location.pathname,
-  search: state.router.location.search,
-})
+  search: state.router.location.search
+});
 
-export default connect(mapStateToProps)(HelloChild)
+export default connect(mapStateToProps)(HelloChild);

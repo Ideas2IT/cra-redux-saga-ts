@@ -1,92 +1,27 @@
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import { createStyles, Theme, withStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuIcon from '@material-ui/icons/Menu';
+import {
+  AppBar, Button, Divider,
+  Drawer, Hidden, IconButton, List,
+  ListItem, ListItemText, Menu, MenuItem,
+  Theme, Toolbar, Typography, withStyles
+} from '@material-ui/core';
+import { AccountCircle, FiberManualRecord, Menu as MenuIcon } from '@material-ui/icons';
 import * as React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { LocalizeContextProps, withLocalize } from 'react-localize-redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import compose from 'recompose/compose';
-import { changeTheme } from '../actions/theme/theme';
-import { IState } from '../reducers';
-import { themes } from '../themes/index';
-import globalTranslations from '../translations/global.json';
-
-const drawerWidth = 240;
-
-const styles = ({ breakpoints, colors, transparentBackground, palette, mixins }: Theme) =>
-createStyles({
-  drawerPaper: {
-    width: drawerWidth,
-    [breakpoints.up('md')]: {
-      position: 'relative',
-    }
-  },
-  dropdownBtn: {
-    [breakpoints.down('md')]: {
-      color: palette.primary.light
-    },
-    '&:hover': {
-      backgroundColor: transparentBackground.light
-    },
-    color: colors.primaryText,
-    textTransform: 'capitalize'
-  },
-  flex: {
-    alignItems: 'center',
-    display: 'flex',
-    flexGrow: 1,
-    justifyContent: 'flex-end'
-  },
-  linkBtn: {
-    [breakpoints.down('md')]: {
-    color: palette.primary.light
-  },
-  '&.active': {
-    backgroundColor: transparentBackground.dark
-  },
-  '&:hover': {
-    backgroundColor: transparentBackground.light
-  },
-  borderRadius: '3px',
-  color: colors.primaryText,
-  margin: '0 3px',
-  padding: '5px 10px',
-  textDecoration: 'none',
-  },
-  navIconHide: {
-    [breakpoints.up('md')]: {
-    display: 'none',
-  },
-  flex: 0,
-    marginLeft: 'auto',
-  },
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: '10px'
-  },
-    toolbar: mixins.toolbar,
-});
+import { changeTheme } from '../../actions/theme/theme';
+import { IState } from '../../reducers';
+import { themes } from '../../themes/index';
+import defaultLanguage from '../../translations/en.welcome.json';
+import { styles } from './style';
 
 interface INavState {
   languageSelection: any,
   themeSelection: any,
-  availableThemes: string[],
+  availableThemes: Theme[],
   openSideNav: boolean,
   direction: string
 }
@@ -95,12 +30,15 @@ class NavBar extends React.Component<INavProps, INavState>{
   constructor(props: INavProps) {
     super(props);
     this.state = {
-      availableThemes: (() => Object.keys(themes))(),
+      availableThemes: Object.keys(themes).map(key => {
+        themes[key].code = key;
+        return themes[key];
+      }),
       direction: 'rtl',
       languageSelection: null,
       openSideNav: false,
-      themeSelection: null,
-    }
+      themeSelection: null
+    };
     this.props.initialize({
       languages: [
         { name: 'English', code: 'en' },
@@ -108,33 +46,54 @@ class NavBar extends React.Component<INavProps, INavState>{
         { name: 'Spanish', code: 'es' }
       ],
       options: { renderToStaticMarkup },
-      translation: globalTranslations
+      translation: defaultLanguage
     });
+    this.addTranslationsForActiveLanguage();
+  }
+
+  public componentDidUpdate(prevProps: INavProps) {
+    const hasActiveLanguageChanged =
+      prevProps.activeLanguage !== this.props.activeLanguage;
+    if (hasActiveLanguageChanged) {
+      this.addTranslationsForActiveLanguage();
+    }
+  }
+
+  public addTranslationsForActiveLanguage() {
+    const { activeLanguage } = this.props;
+    if (!activeLanguage) {
+      return;
+    }
+    import(`../../translations/${activeLanguage.code}.welcome.json`).then(
+      translations => {
+        this.props.addTranslationForLanguage(translations, activeLanguage.code);
+      }
+    );
   }
 
   public handleDrawerToggle = () => {
     this.setState(state => ({ openSideNav: !state.openSideNav }));
-  };
+  }
 
   public handleLangClick = (event: any) => {
     this.setState({ languageSelection: event.currentTarget });
-  };
+  }
 
   public handleLangClose = (code: string) => {
     this.props.setActiveLanguage(code);
     this.handleDrawerToggle();
     this.setState({ languageSelection: null });
-  };
+  }
 
   public handleThemeClick = (event: any) => {
     this.setState({ themeSelection: event.currentTarget });
-  };
+  }
 
   public handleThemeClose = (theme: string) => {
     this.handleDrawerToggle();
     this.props.setActiveTheme(theme);
     this.setState({ themeSelection: null });
-  };
+  }
 
   public render() {
     const { activeLanguage, activeTheme, classes, languages } = this.props;
@@ -173,9 +132,9 @@ class NavBar extends React.Component<INavProps, INavState>{
           id="simple-menu"
           anchorEl={languageSelection}
           open={Boolean(languageSelection)}
-          onClose={this.handleLangClose.bind(this, activeLanguage ? activeLanguage.code : '')}>
+          onClose={() => this.handleLangClose(activeLanguage ? activeLanguage.code : '')}>
           {languages.map((lang, index) => (
-            <MenuItem key={index} onClick={this.handleLangClose.bind(this, lang.code)}>{lang.name}</MenuItem>
+            <MenuItem key={index} onClick={() => this.handleLangClose(lang.code)}>{lang.name}</MenuItem>
           ))}
         </Menu>
         <Button
@@ -189,9 +148,12 @@ class NavBar extends React.Component<INavProps, INavState>{
           id="simple-menu"
           anchorEl={themeSelection}
           open={Boolean(themeSelection)}
-          onClose={this.handleThemeClose.bind(this, activeTheme)}>
-          {availableThemes.map((theme, index) => (
-            <MenuItem key={index} onClick={this.handleThemeClose.bind(this, theme)}>{theme}</MenuItem>
+          onClose={() => this.handleThemeClose(activeTheme)}>
+          {availableThemes.map((theme: any, index) => (
+            <MenuItem className={classes.themes} key={index} onClick={() => this.handleThemeClose(theme.code)}>
+              <FiberManualRecord className={classes.themeIcon} style={{color: theme.palette.primary.main}}/>
+              {theme.code}
+            </MenuItem>
           ))}
         </Menu>
         <IconButton
@@ -249,9 +211,9 @@ class NavBar extends React.Component<INavProps, INavState>{
             id="simple-menu"
             anchorEl={languageSelection}
             open={Boolean(languageSelection)}
-            onClose={this.handleLangClose.bind(this, activeLanguage ? activeLanguage.code : '')}>
+            onClose={() => this.handleLangClose(activeLanguage ? activeLanguage.code : '')}>
             {languages.map((lang, index) => (
-              <MenuItem key={index} onClick={this.handleLangClose.bind(this, lang.code)}>{lang.name}</MenuItem>
+              <MenuItem key={index} onClick={() => this.handleLangClose(lang.code)}>{lang.name}</MenuItem>
             ))}
           </Menu>
         </ListItem>
@@ -267,9 +229,12 @@ class NavBar extends React.Component<INavProps, INavState>{
             id="simple-menu"
             anchorEl={themeSelection}
             open={Boolean(themeSelection)}
-            onClose={this.handleThemeClose.bind(this, activeTheme)}>
-            {availableThemes.map((theme, index) => (
-              <MenuItem key={index} onClick={this.handleThemeClose.bind(this, theme)}>{theme}</MenuItem>
+            onClose={() => this.handleThemeClose(activeTheme)}>
+            {availableThemes.map((theme: any, index) => (
+              <MenuItem className={classes.themes} key={index} onClick={() => this.handleThemeClose(theme.code)}>
+                <FiberManualRecord className={classes.themeIcon} style={{color: theme.palette.primary.main}} />
+                {theme.code}
+              </MenuItem>
             ))}
           </Menu>
         </ListItem>
@@ -309,16 +274,16 @@ class NavBar extends React.Component<INavProps, INavState>{
             open={this.state.openSideNav}
             onClose={this.handleDrawerToggle}
             classes={{
-              paper: classes.drawerPaper,
+              paper: classes.drawerPaper
             }}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true // Better open performance on mobile.
             }}>
             {sideNavLinks}
           </Drawer>
         </Hidden>
       </div>
-    )
+    );
   }
 }
 
@@ -337,12 +302,12 @@ interface IDispatchProps {
 }
 
 const mapStateToProps = (state: IState) => ({
-  activeTheme: state.theme.activeTheme,
-})
+  activeTheme: state.theme.activeTheme
+});
 
 const mapDispatchToProps = (dispatch: any) => ({
   setActiveTheme: (theme: string) => dispatch(changeTheme(theme))
-})
+});
 
 export default compose(
   withStyles(styles),

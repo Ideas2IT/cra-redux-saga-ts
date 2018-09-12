@@ -4,6 +4,6 @@ const NoMatch = () => (
   <div>
     No Match
   </div>
-)
+);
 
-export default NoMatch
+export default NoMatch;

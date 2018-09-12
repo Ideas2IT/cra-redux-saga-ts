@@ -8,15 +8,14 @@ import App from './App';
 import rootReducer from './reducers';
 
 const history = createBrowserHistory();
-
-const composeEnhancer: typeof compose = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const composeEnhancer: typeof compose = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   connectRouter(history)(rootReducer),
   composeEnhancer(
     applyMiddleware(
-      routerMiddleware(history),
-    ),
-  ),
+      routerMiddleware(history)
+    )
+  )
 );
 
 it('renders without crashing', () => {
