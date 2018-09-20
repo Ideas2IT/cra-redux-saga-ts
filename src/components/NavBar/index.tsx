@@ -1,32 +1,47 @@
 import {
-  AppBar, Button, Divider,
-  Drawer, Hidden, IconButton, List,
-  ListItem, ListItemText, Menu, MenuItem,
-  Theme, Toolbar, Typography, withStyles
-} from '@material-ui/core';
-import { AccountCircle, FiberManualRecord, Menu as MenuIcon } from '@material-ui/icons';
-import * as React from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
-import { LocalizeContextProps, withLocalize } from 'react-localize-redux';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { NavLink } from 'react-router-dom';
-import compose from 'recompose/compose';
-import { changeTheme } from '../../actions/theme/theme';
-import { IState } from '../../reducers';
-import { themes } from '../../themes/index';
-import defaultLanguage from '../../translations/en.welcome.json';
-import { styles } from './style';
+  AppBar,
+  Button,
+  Divider,
+  Drawer,
+  Hidden,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Theme,
+  Toolbar,
+  Typography,
+  withStyles
+} from "@material-ui/core";
+import {
+  AccountCircle,
+  FiberManualRecord,
+  Menu as MenuIcon
+} from "@material-ui/icons";
+import * as React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { LocalizeContextProps, withLocalize } from "react-localize-redux";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import { NavLink } from "react-router-dom";
+import compose from "recompose/compose";
+import { changeTheme } from "../../actions/theme/theme";
+import { IState } from "../../reducers";
+import { themes } from "../../themes/index";
+import defaultLanguage from "../../translations/en.welcome.json";
+import { styles } from "./style";
 
 interface INavState {
-  languageSelection: any,
-  themeSelection: any,
-  availableThemes: Theme[],
-  openSideNav: boolean,
-  direction: string
+  languageSelection: any;
+  themeSelection: any;
+  availableThemes: Theme[];
+  openSideNav: boolean;
+  direction: string;
 }
 
-class NavBar extends React.Component<INavProps, INavState>{
+class NavBar extends React.Component<INavProps, INavState> {
   constructor(props: INavProps) {
     super(props);
     this.state = {
@@ -34,16 +49,16 @@ class NavBar extends React.Component<INavProps, INavState>{
         themes[key].code = key;
         return themes[key];
       }),
-      direction: 'rtl',
+      direction: "rtl",
       languageSelection: null,
       openSideNav: false,
       themeSelection: null
     };
     this.props.initialize({
       languages: [
-        { name: 'English', code: 'en' },
-        { name: 'French', code: 'fr' },
-        { name: 'Spanish', code: 'es' }
+        { name: "English", code: "en" },
+        { name: "French", code: "fr" },
+        { name: "Spanish", code: "es" }
       ],
       options: { renderToStaticMarkup },
       translation: defaultLanguage
@@ -104,61 +119,88 @@ class NavBar extends React.Component<INavProps, INavState>{
           exact={true}
           to="/"
           activeClassName="active"
-          className={classes.linkBtn}>
+          className={classes.linkBtn}
+        >
           Home
         </NavLink>
         <NavLink
           exact={true}
           to="/hello"
           activeClassName="active"
-          className={classes.linkBtn}>
+          className={classes.linkBtn}
+        >
           Hello
         </NavLink>
         <NavLink
           exact={true}
           to="/counter"
           activeClassName="active"
-          className={classes.linkBtn}>
+          className={classes.linkBtn}
+        >
           Counter
+        </NavLink>
+        <NavLink
+          exact={true}
+          to="/user"
+          activeClassName="active"
+          className={classes.linkBtn}
+        >
+          User
         </NavLink>
         <Button
           className={classes.dropdownBtn}
-          aria-owns={languageSelection ? 'simple-menu' : undefined}
+          aria-owns={languageSelection ? "simple-menu" : undefined}
           aria-haspopup="true"
-          onClick={this.handleLangClick}>
-          {activeLanguage ? activeLanguage.name : ''}
+          onClick={this.handleLangClick}
+        >
+          {activeLanguage ? activeLanguage.name : ""}
         </Button>
         <Menu
           id="simple-menu"
           anchorEl={languageSelection}
           open={Boolean(languageSelection)}
-          onClose={() => this.handleLangClose(activeLanguage ? activeLanguage.code : '')}>
+          onClose={() =>
+            this.handleLangClose(activeLanguage ? activeLanguage.code : "")
+          }
+        >
           {languages.map((lang, index) => (
-            <MenuItem key={index} onClick={() => this.handleLangClose(lang.code)}>{lang.name}</MenuItem>
+            <MenuItem
+              key={index}
+              onClick={() => this.handleLangClose(lang.code)}
+            >
+              {lang.name}
+            </MenuItem>
           ))}
         </Menu>
         <Button
           className={classes.dropdownBtn}
-          aria-owns={themeSelection ? 'simple-menu' : undefined}
+          aria-owns={themeSelection ? "simple-menu" : undefined}
           aria-haspopup="true"
-          onClick={this.handleThemeClick}>
+          onClick={this.handleThemeClick}
+        >
           {activeTheme}
         </Button>
         <Menu
           id="simple-menu"
           anchorEl={themeSelection}
           open={Boolean(themeSelection)}
-          onClose={() => this.handleThemeClose(activeTheme)}>
+          onClose={() => this.handleThemeClose(activeTheme)}
+        >
           {availableThemes.map((theme: any, index) => (
-            <MenuItem className={classes.themes} key={index} onClick={() => this.handleThemeClose(theme.code)}>
-              <FiberManualRecord className={classes.themeIcon} style={{color: theme.palette.primary.main}}/>
+            <MenuItem
+              className={classes.themes}
+              key={index}
+              onClick={() => this.handleThemeClose(theme.code)}
+            >
+              <FiberManualRecord
+                className={classes.themeIcon}
+                style={{ color: theme.palette.primary.main }}
+              />
               {theme.code}
             </MenuItem>
           ))}
         </Menu>
-        <IconButton
-          aria-haspopup="true"
-          color="inherit">
+        <IconButton aria-haspopup="true" color="inherit">
           <AccountCircle />
         </IconButton>
       </div>
@@ -176,7 +218,8 @@ class NavBar extends React.Component<INavProps, INavState>{
               exact={true}
               to="/"
               activeClassName="active"
-              className={classes.linkBtn}>
+              className={classes.linkBtn}
+            >
               Home
             </NavLink>
           </ListItem>
@@ -185,7 +228,8 @@ class NavBar extends React.Component<INavProps, INavState>{
               exact={true}
               to="/hello"
               activeClassName="active"
-              className={classes.linkBtn}>
+              className={classes.linkBtn}
+            >
               Hello
             </NavLink>
           </ListItem>
@@ -194,54 +238,81 @@ class NavBar extends React.Component<INavProps, INavState>{
               exact={true}
               to="/counter"
               activeClassName="active"
-              className={classes.linkBtn}>
+              className={classes.linkBtn}
+            >
               Counter
             </NavLink>
           </ListItem>
+          <ListItem>
+            <NavLink
+              exact={true}
+              to="/user"
+              activeClassName="active"
+              className={classes.linkBtn}
+            >
+              User
+            </NavLink>
+          </ListItem>
         </List>
-        <ListItem >
+        <ListItem>
           <Button
             className={classes.dropdownBtn}
-            aria-owns={languageSelection ? 'simple-menu' : undefined}
+            aria-owns={languageSelection ? "simple-menu" : undefined}
             aria-haspopup="true"
-            onClick={this.handleLangClick}>
-            {activeLanguage ? activeLanguage.name : ''}
+            onClick={this.handleLangClick}
+          >
+            {activeLanguage ? activeLanguage.name : ""}
           </Button>
           <Menu
             id="simple-menu"
             anchorEl={languageSelection}
             open={Boolean(languageSelection)}
-            onClose={() => this.handleLangClose(activeLanguage ? activeLanguage.code : '')}>
+            onClose={() =>
+              this.handleLangClose(activeLanguage ? activeLanguage.code : "")
+            }
+          >
             {languages.map((lang, index) => (
-              <MenuItem key={index} onClick={() => this.handleLangClose(lang.code)}>{lang.name}</MenuItem>
+              <MenuItem
+                key={index}
+                onClick={() => this.handleLangClose(lang.code)}
+              >
+                {lang.name}
+              </MenuItem>
             ))}
           </Menu>
         </ListItem>
         <ListItem>
           <Button
             className={classes.dropdownBtn}
-            aria-owns={themeSelection ? 'simple-menu' : undefined}
+            aria-owns={themeSelection ? "simple-menu" : undefined}
             aria-haspopup="true"
-            onClick={this.handleThemeClick}>
+            onClick={this.handleThemeClick}
+          >
             {activeTheme}
           </Button>
           <Menu
             id="simple-menu"
             anchorEl={themeSelection}
             open={Boolean(themeSelection)}
-            onClose={() => this.handleThemeClose(activeTheme)}>
+            onClose={() => this.handleThemeClose(activeTheme)}
+          >
             {availableThemes.map((theme: any, index) => (
-              <MenuItem className={classes.themes} key={index} onClick={() => this.handleThemeClose(theme.code)}>
-                <FiberManualRecord className={classes.themeIcon} style={{color: theme.palette.primary.main}} />
+              <MenuItem
+                className={classes.themes}
+                key={index}
+                onClick={() => this.handleThemeClose(theme.code)}
+              >
+                <FiberManualRecord
+                  className={classes.themeIcon}
+                  style={{ color: theme.palette.primary.main }}
+                />
                 {theme.code}
               </MenuItem>
             ))}
           </Menu>
         </ListItem>
         <ListItem>
-          <IconButton
-            aria-haspopup="true"
-            color="inherit">
+          <IconButton aria-haspopup="true" color="inherit">
             <AccountCircle />
           </IconButton>
         </ListItem>
@@ -263,14 +334,15 @@ class NavBar extends React.Component<INavProps, INavState>{
               color="inherit"
               aria-label="Open drawer"
               onClick={this.handleDrawerToggle}
-              className={classes.navIconHide}>
+              className={classes.navIconHide}
+            >
               <MenuIcon />
             </IconButton>
           </Toolbar>
         </AppBar>
         <Hidden mdUp={true}>
           <Drawer
-            anchor={this.state.direction === 'rtl' ? 'right' : 'left'}
+            anchor={this.state.direction === "rtl" ? "right" : "left"}
             open={this.state.openSideNav}
             onClose={this.handleDrawerToggle}
             classes={{
@@ -278,7 +350,8 @@ class NavBar extends React.Component<INavProps, INavState>{
             }}
             ModalProps={{
               keepMounted: true // Better open performance on mobile.
-            }}>
+            }}
+          >
             {sideNavLinks}
           </Drawer>
         </Hidden>
@@ -288,17 +361,17 @@ class NavBar extends React.Component<INavProps, INavState>{
 }
 
 interface INavProps extends LocalizeContextProps {
-  classes: any,
-  activeTheme: string,
-  setActiveTheme(theme: string): void
+  classes: any;
+  activeTheme: string;
+  setActiveTheme(theme: string): void;
 }
 
 interface IStateProps {
-  activeTheme: string
+  activeTheme: string;
 }
 
 interface IDispatchProps {
-  setActiveTheme(theme: string): void
+  setActiveTheme(theme: string): void;
 }
 
 const mapStateToProps = (state: IState) => ({
@@ -312,6 +385,9 @@ const mapDispatchToProps = (dispatch: any) => ({
 export default compose(
   withStyles(styles),
   withRouter,
-  connect<IStateProps, IDispatchProps>(mapStateToProps, mapDispatchToProps),
+  connect<IStateProps, IDispatchProps>(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
   withLocalize
 )(NavBar);
