@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "latest",
     "@material-ui/icons": "^3.0.1",
+    "@types/classnames": "^2.2.6",
     "@types/material-ui": "^0.21.5",
     "@types/recompose": "^0.26.4",
     "connected-react-router": "^4.4.1",
