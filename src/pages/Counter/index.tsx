@@ -1,7 +1,6 @@
-import { Button, Grid } from '@material-ui/core';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 import { decrement, decrementAsync, increment, incrementAsync } from '../../actions/counter/counter';
 import { IState } from '../../reducers';
 
@@ -18,47 +17,29 @@ interface IDispatchProps {
 }
 
 const Counter = (props: RouteComponentProps<any> & IStateProps & IDispatchProps) => (
-  <Grid spacing={8}
-    container={true}
-    direction="row"
-    justify="center"
-    alignItems="center">
-    <Grid item={true} lg={6} container={true}
-      direction="row"
-      justify="space-around"
-      alignItems="center">
-      <Grid item={true} container={true}
-        direction="row"
-        justify="space-around"
-        alignItems="center" lg={2} xs={4}>
-        <Button variant="outlined" color="secondary" aria-label="Sub" onClick={props.decrement} disabled={props.isLoading}>
+  <div className="container justify-content-center align-items-center">
+    <div className="row justify-content-around align-items-center">
+      <div className="col-sm-4 col-lg-2 align-items-center justify-content-between">
+        <button className="btn btn-outline-primary mb-2" aria-label="Sub" onClick={props.decrement} disabled={props.isLoading}>
           Decrement
-        </Button>
-        <br />
-        <Button variant="outlined" color="secondary" aria-label="Sub" onClick={props.decrementAsync} disabled={props.isLoading}>
+        </button>
+        <button className="btn btn-outline-primary" aria-label="Sub" onClick={props.decrementAsync} disabled={props.isLoading}>
           Decrement Async
-        </Button>
-      </Grid>
-      <Grid item={true} container={true}
-        direction="column"
-        justify="space-between"
-        alignItems="center" alignContent="center" lg={2} xs={4}>
+        </button>
+      </div>
+      <div className="col-sm-4 col-lg-2 align-items-center justify-content-between">
         <div>Counter: {props.count}</div>
-      </Grid>
-      <Grid item={true} container={true}
-        direction="row"
-        justify="space-around"
-        alignItems="center" lg={2} xs={4}>
-        <Button variant="outlined" color="primary" aria-label="Add" onClick={props.increment} disabled={props.isLoading}>
+      </div>
+      <div className="col-sm-4 col-lg-2 align-items-center justify-content-between">
+        <button className="btn btn-outline-primary mb-2" aria-label="Add" onClick={props.increment} disabled={props.isLoading}>
           Increment
-        </Button>
-        <br />
-        <Button variant="outlined" color="primary" aria-label="Add" onClick={props.incrementAsync} disabled={props.isLoading}>
+        </button>
+        <button className="btn btn-outline-primary" aria-label="Add" onClick={props.incrementAsync} disabled={props.isLoading}>
           Increment Async
-        </Button>
-      </Grid>
-    </Grid>
-  </Grid>
+        </button>
+      </div>
+    </div>
+  </div>
 );
 
 const mapStateToProps = (state: IState) => ({

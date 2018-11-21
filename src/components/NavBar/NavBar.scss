@@ -1,0 +1,58 @@
+/* inject:scss */
+@import '../../_styleConstants.scss';
+/* endinject */
+
+.navbar-container {
+  margin-bottom: 10px;
+
+  .logo{
+    height: 30px;
+  }
+
+  .navbar {
+    border-radius: 0;
+    background-color: $primaryColor;
+
+    span[role=button] {
+      padding: 15px;
+      display: inline-block;
+      line-height: 20px;
+    }
+
+    .navbar-brand {
+      color: $contrastTextColour;
+    }
+
+    .nav-link {
+      &.active,
+      &:hover {
+        color: $contrastTextColour;
+        background: #5184f9;
+      }
+    }
+
+    .glyphicon {
+      color: $contrastTextColour;
+    }
+
+    .dropdown-toggle {
+      text-transform: capitalize;
+      &:active,
+      &:hover {
+        color: $contrastTextColour;
+      }
+    }
+  }
+
+  .themeName {
+    text-transform: capitalize;
+  }
+
+  .themeIcon {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+}

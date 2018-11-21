@@ -4,7 +4,7 @@ import HelloChild from "../../components/HelloChild";
 class Hello extends React.Component {
   public render() {
     return (
-      <div>
+      <div className="container-fluid">
         <HelloChild />
       </div>
     );

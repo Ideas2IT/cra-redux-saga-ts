@@ -6,7 +6,7 @@ interface IProps extends LocalizeContextProps {
 }
 
 const Home = ({ activeLanguage }: IProps) => (
-  <div>
+  <div className="container-fluid">
     Home
     <h3>Active Language is {activeLanguage ? activeLanguage.name : ''}</h3>
     <h1><Translate id="greeting" data={{ name: 'App Name' }} /></h1>
