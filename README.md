@@ -1,6 +1,6 @@
 # cra-redux-saga-ts
 
-This is the boilerplate to create a new React Application with Create React App as base using Typescript and providing integrations with Redux, Redux Saga, React Router and Material UI.
+This is the boilerplate to create a new React Application with Create React App as base using Typescript and providing integrations with Redux, Redux Saga, React Router and Bootstrap.
 
 # Features!
 
@@ -10,8 +10,7 @@ This is the boilerplate to create a new React Application with Create React App 
   - [Redux Saga](https://redux-saga.js.org/)
   - [React Router](https://reacttraining.com/react-router/web/guides/philosophy)
   - [i18n](https://ryandrewjohnson.github.io/react-localize-redux-docs/)
-  - [Material-UI](https://material-ui.com/)
-  - [Custome Theme](https://material-ui.com/customization/themes/)
+  - [Bootstrap](https://getbootstrap.com/)
 
 #
 

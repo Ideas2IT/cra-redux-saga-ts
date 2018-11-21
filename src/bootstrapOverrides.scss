@@ -1,0 +1,53 @@
+@import '_styleConstants.scss';
+
+// Global Bootstrap overrides START
+body {
+  background-color: $appBackgroundColor;
+  color: $primaryTextColor;
+}
+
+.btn-primary {
+  border-color: $primaryColor;
+  background-color: $contrastBgColour;
+  color: $primaryColor;
+
+  &:hover {
+    background-color: $primaryColor;
+  }
+}
+
+label{
+  font-weight: normal;
+}
+
+.nav-item {
+  padding: 0 10px;
+  .nav-link {
+  color: $contrastTextColour;
+  }
+}
+
+.navbar-default {
+  border-color: transparent;
+
+  .navbar-nav>.open>a,
+  .navbar-nav>.open>a:focus,
+  .navbar-nav>.open>a:hover {
+    color: $contrastTextColour;
+    background-color: $primaryColor-120;
+  }
+}
+
+.navbar-container .navbar .dropdown-toggle {
+  color: $contrastTextColour;
+}
+
+.dropdown-menu {
+  li {
+    a {
+      color: $primaryTextColor;
+    }
+  }
+}
+
+// Global Bootstrap overrides END
